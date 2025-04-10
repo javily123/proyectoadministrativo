@@ -1,0 +1,309 @@
+// 1. Importación de fuente
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;600&display=swap');
+
+// 2. Variables
+$verde: #27ae60;
+$negro: #130f40;
+$blanco: #fff;
+$color-ligero: #666;
+$fondo-ligero: #f7f7f7;
+$border: 0.1rem solid rgba(0, 0, 0, 0.2);
+$sombra-caja: 0 1rem 1rem rgba(0, 0, 0, 0.05);
+
+// 3. Mixins
+@mixin grid($val) {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax($val, 1fr));
+}
+
+@mixin font($size) {
+  font-family: 'Satisfy', cursive;
+  font-size: $size;
+  color: $verde;
+}
+
+// 4. Reset y base
+* {
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  outline: none;
+  border: none;
+  text-decoration: none;
+  text-transform: none; // Corregido: sin capitalize
+  transition: 0.2s linear;
+}
+
+html {
+  font-size: 62.5%;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+  scroll-padding-top: 8.5rem;
+
+  &::-webkit-scrollbar {
+    width: 1rem;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: $blanco;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $verde;
+    border-radius: 5rem;
+  }
+}
+
+body {
+  background: $blanco;
+}
+
+// 5. Header (barra superior)
+.header {
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: $blanco;
+  box-shadow: $sombra-caja;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2rem 9%;
+
+  .logo {
+    font-size: 2.5rem;
+    font-weight: 600;
+    color: $negro;
+
+    i {
+      color: $verde;
+      margin-right: 0.5rem;
+    }
+  }
+
+  .navbar {
+    a {
+      font-size: 1.7rem;
+      margin: 0 1rem;
+      color: $negro;
+
+      &:hover {
+        color: $verde;
+      }
+    }
+  }
+
+  .icons {
+    div {
+      font-size: 2.5rem;
+      color: $negro;
+      margin-left: 2rem;
+      cursor: pointer;
+
+      &:hover {
+        color: $verde;
+      }
+    }
+  }
+}
+
+// 6. Sección Home (inicio)
+.home {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 2rem;
+  padding: 6rem 9%;
+  background: linear-gradient(135deg, #e9fdf2, #d0f3df);
+
+  .content {
+    flex: 1 1 45rem;
+    animation: fade-slide-in 1s ease forwards;
+
+    h3 {
+      font-size: 5rem;
+      color: $negro;
+      font-weight: 700;
+
+      span {
+        color: $verde;
+      }
+    }
+
+    p {
+      font-size: 1.6rem;
+      color: darken($color-ligero, 15%);
+      margin: 2rem 0;
+      max-width: 45rem;
+      line-height: 1.7;
+    }
+
+    .btn {
+      display: inline-block;
+      margin-top: 1rem;
+      padding: 1rem 3rem;
+      background: linear-gradient(to right, $verde, darken($verde, 10%));
+      color: $blanco;
+      font-size: 1.6rem;
+      border-radius: 5rem;
+      cursor: pointer;
+      box-shadow: 0 0.5rem 1rem rgba(0, 128, 0, 0.2);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+      &:hover {
+        transform: scale(1.05);
+        box-shadow: 0 1rem 2rem rgba(0, 128, 0, 0.3);
+      }
+    }
+  }
+
+  .image {
+    flex: 1 1 45rem;
+    text-align: center;
+    animation: fade-slide-in 1s ease 0.3s forwards;
+    opacity: 0;
+
+    img {
+      width: 100%;
+      max-width: 500px;
+      filter: drop-shadow(0 0 1rem rgba(39, 174, 96, 0.3));
+      transform: scale(1);
+      transition: transform 0.5s ease;
+
+      &:hover {
+        transform: scale(1.05);
+      }
+    }
+  }
+}
+
+// Animación de entrada
+@keyframes fade-slide-in {
+  0% {
+    opacity: 0;
+    transform: translateY(3rem) scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+// 7. Sección About
+.about {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6rem 9%;
+  background: $fondo-ligero;
+  
+  .image {
+    flex: 1 1 45rem;
+    text-align: center;
+
+    img {
+      width: 100%;
+      max-width: 500px;
+      filter: drop-shadow(0 0 1rem rgba(39, 174, 96, 0.3));
+      transform: scale(1);
+      transition: transform 0.5s ease;
+
+      &:hover {
+        transform: scale(1.05);
+      }
+    }
+  }
+
+  .content {
+    flex: 1 1 45rem;
+    animation: fade-slide-in 1s ease 0.3s forwards;
+
+    h3 {
+      font-size: 3.5rem;
+      color: $negro;
+      font-weight: 700;
+
+      span {
+        color: $verde;
+      }
+    }
+
+    p {
+      font-size: 1.6rem;
+      color: darken($color-ligero, 15%);
+      margin: 2rem 0;
+      line-height: 1.7;
+    }
+
+    .btn {
+      display: inline-block;
+      margin-top: 1rem;
+      padding: 1rem 3rem;
+      background: linear-gradient(to right, $verde, darken($verde, 10%));
+      color: $blanco;
+      font-size: 1.6rem;
+      border-radius: 5rem;
+      cursor: pointer;
+      box-shadow: 0 0.5rem 1rem rgba(0, 128, 0, 0.2);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+      &:hover {
+        transform: scale(1.05);
+        box-shadow: 0 1rem 2rem rgba(0, 128, 0, 0.3);
+      }
+    }
+  }
+}
+
+// 8. Responsive
+@media (max-width: 991px) {
+  .header {
+    padding: 2rem;
+  }
+
+  .home {
+    padding: 3rem 5%;
+  }
+
+  .about {
+    flex-direction: column-reverse;
+    text-align: center;
+  }
+}
+
+@media (max-width: 768px) {
+  .header .navbar {
+    display: none;
+  }
+
+  .home {
+    flex-direction: column-reverse;
+    text-align: center;
+
+    .content h3 {
+      font-size: 3.5rem;
+    }
+
+    .content p {
+      font-size: 1.4rem;
+    }
+
+    .image img {
+      max-width: 100%;
+    }
+  }
+
+  .about {
+    .content h3 {
+      font-size: 3rem;
+    }
+
+    .content p {
+      font-size: 1.4rem;
+    }
+  }
+}
