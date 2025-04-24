@@ -123,26 +123,33 @@
     </script>
 </head>
 
-<body class=" p-4 sm:px-6 bg-green-100" style="padding-top: 88px">
+<body class=" p-4 sm:px-6 bg-green-100" style="padding-top: 64px">
     <iframe src="header.html"
-        style="position: fixed; top: 0; left: 0; width: 100%; height: 90px; border: none; z-index: 9999" scrolling="no"
+        style="position: fixed; top: 0; left: 0; width: 100%; height: 80px; border: none; z-index: 9999" scrolling="no"
         title="Header"></iframe>
 
-    <div class="w-full bg-white shadow-md px-4 py-4 mt-[90px] sticky top-[90px] z-50">
-        <h1 class="text-3xl font-semibold text-gray-800">Ordenar</h1>
+    <div class="w-full bg-white shadow-md px-6 py-4 mt-4 rounded-b-2xl sticky top-0 z-50">
+        <h1 class="text-2xl sm:text-3xl font-semibold text-gray-800">Ordenar</h1>
     </div>
-    <div class=" flex flex-wrap justify-center gap-8 mt-8">
-
-        <div class="cursor-pointer text-center w-[320px] h-[220px]" onclick="toggleModal()">
-            <img src="images/malteada.jpg" alt="Malteadas"
-                class="w-full h-full object-cover rounded shadow mb-2 transform transition-transform duration-300 hover:scale-105" />
-            <h2 class="text-xl font-semibold">Malteadas</h2>
-            
-            <div class="flex justify-center">
-                
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12 mt-6 px-1 ">
+        <div class="cursor-pointer text-center" onclick="toggleModal()">
+            <div
+              class="group w-full min-h-[700px] overflow-hidden rounded-lg border border-slate-200 bg-white shadow-lg transition-all duration-300 hover:border-green-600 flex flex-col"
+            >
+              <img
+                src="images/malteada.jpg"
+                alt="Malteadas"
+                class=" h-100 w-full object-cover rounded-[5px] transition-transform duration-300 group-hover:scale-105"
+              />
+          
+              <div class="flex-1 px-4 py-6 flex flex-col justify-center text-center">
+                <h2 class="text-2xl font-semibold text-slate-800 group-hover:text-green-600 transition-colors">
+                  Malteadas
+                </h2>
+                <p class="text-lg text-slate-500 mt-4">Haz clic para personalizar</p>
+              </div>
             </div>
-        </div>
-
+          </div>
         <div id="modal" onclick="cerrarSiTocaAfuera(event, 'modal')"
             class="fixed inset-0 bg-black bg-opacity-50 flex items-start justify-center pt-24 px-2 sm:px-0 hidden overflow-y-auto z-50">
 
@@ -353,20 +360,24 @@
         </div>
 
         <!-- Botón para abrir el modal -->
-        <div class="cursor-pointer text-center w-[320px] h-[220px]" onclick="toggleTeeModal()">
-            <img src="images/tee.jpeg" alt="Té"
-                class="w-full h-full object-cover rounded shadow mb-2 transform transition-transform duration-300 hover:scale-105" />
-            <h2 class="text-xl font-semibold">
-
-                Té <div class="flex justify-center">
-                </div>
-
-
-            </h2>
-
-        </div>
-
-        <!-- Modal Té -->
+        <div class="cursor-pointer text-center" onclick="toggleTeeModal()">
+            <div
+            class="group w-full min-h-[700px] overflow-hidden rounded-lg border border-slate-200 bg-white shadow-lg transition-all duration-300 hover:border-green-600 flex flex-col"
+            >
+              <img
+                src="images/teesuperpro-4.jpg"
+                alt="Té"
+                class=" h-full w-120 object-cover rounded-[5px] transition-transform duration-300 group-hover:scale-105"
+                />
+          
+                <div class="flex-1 px-4 py-6 flex flex-col justify-center text-center">
+                    <h2 class="text-2xl font-semibold text-slate-800 group-hover:text-green-600 transition-colors">
+                  Tés
+                </h5>
+                <p class="text-lg text-slate-500 mt-4">Haz clic para personalizar</p>
+              </div>
+            </div>
+          </div>
         <!-- Modal Té -->
         <div id="modal-tee" onclick="cerrarSiTocaAfuera(event, 'modal-tee')"
             class="fixed inset-0 bg-black bg-opacity-50 flex items-start justify-center pt-24 px-2 sm:px-0 hidden overflow-y-auto z-50">
@@ -423,7 +434,7 @@
 
                 <!-- Ponche -->
                 <div>
-                    <label class="block text-sm font-medium">Ponche  (+20)</label>
+                    <label class="block text-sm font-medium">Ponche (+20)</label>
                     <div class="relative w-full">
                         <select id="ponche" onchange="calcularTotalTee()"
                             class="appearance-none w-full border border-gray-300 rounded-md px-4 py-2 bg-white text-gray-800 shadow-sm pr-10">
@@ -441,7 +452,7 @@
 
                 <!-- Fibra -->
                 <div>
-                    <label class="block text-sm font-medium">Fibra  (+20)</label>
+                    <label class="block text-sm font-medium">Fibra (+20)</label>
                     <div class="relative w-full">
                         <select id="fibra" onchange="calcularTotalTee()"
                             class="appearance-none w-full border border-gray-300 rounded-md px-4 py-2 bg-white text-gray-800 shadow-sm pr-10">
@@ -476,14 +487,24 @@
             </div>
         </div>
         <!-- Botón para abrir el modal de Postres/Snack -->
-        <div class="cursor-pointer text-center w-[320px] h-[220px]" onclick="togglePostresModal()">
-            <img src="images/snack.jpeg" alt="Postres y Snacks"
-                class="w-full h-full object-cover rounded shadow mb-2 transform transition-transform duration-300 hover:scale-105" />
-            <h2 class="text-xl font-semibold">Postres/Snack</h2>
-            <div class="flex justify-center">
+        <div class="cursor-pointer text-center" onclick="togglePostresModal()">
+            <div
+              class="group w-full min-h-[700px] overflow-hidden rounded-lg border border-slate-200 bg-white shadow-lg transition-all duration-300 hover:border-green-600 flex flex-col"
+            >
+              <img
+                class=" h-120 w-full object-cover rounded-[5px]"
+                src="images/snack.jpeg"
+                alt="Imagen de prueba"
+              />
+          
+              <div class="flex-1 px-4 py-6 flex flex-col justify-center text-center">
+                <h5 class="text-2xl font-bold text-slate-800 group-hover:text-green-600 transition-colors">
+                  Postres y Snacks
+                </h5>
+                <p class="text-lg text-slate-500 mt-4">Haz clic para personalizar</p>
+              </div>
             </div>
-        </div>
-
+          </div>
         <!-- Modal Postres/Snack -->
         <div id="modal-postres" onclick="cerrarSiTocaAfuera(event, 'modal-postres')"
             class="fixed inset-0 bg-black bg-opacity-50 flex items-start justify-center pt-24 px-2 sm:px-0 hidden overflow-y-auto z-50">
