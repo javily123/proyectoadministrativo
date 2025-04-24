@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ordenar
+    </title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+    <script>
+        function toggleModal() {
+            document.getElementById("modal").classList.toggle("hidden");
+            if (!document.getElementById("modal").classList.contains("hidden")) {
+                calcularTotal();
+            }
+        }
+        function toggleTeeModal() {
+            document.getElementById("modal-tee").classList.toggle("hidden");
+        }
+        function togglePostresModal() {
+            document.getElementById("modal-postres").classList.toggle("hidden");
+        }
+
+        function cerrarSiTocaAfuera(event, modalId) {
+            const modal = document.getElementById(modalId);
+            modal.classList.add("hidden");
+        }
+
+        function agregarAlCarrito() {
+            alert("¡Su producto fue agregado al carrito!");
+
+            const modalMalteadas = document.getElementById("modal");
+            const modalTee = document.getElementById("modal-tee");
+            const modalPostres = document.getElementById("modal-postres");
+
+            if (!modalMalteadas.classList.contains("hidden")) {
+                modalMalteadas.classList.add("hidden");
+            }
+
+            if (!modalTee.classList.contains("hidden")) {
+                modalTee.classList.add("hidden");
+            }
+            if (!modalPostres.classList.contains("hidden")) {
+                modalPostres.classList.add("hidden");
+            }
+        }
+
+        function cambiarImagen(selectId, imgId) {
+            const select = document.getElementById(selectId);
+            const img = document.getElementById(imgId);
+            const sabor = select.value;
+
+            const imagenes = {
+                Chocolate: "images/chocoscoop.jpeg",
+                Galleta: "images/galletascoop.jpeg",
+                Vainilla: "images/scoopvainilla.jpg",
+                Fresa: "images/fresascoop.jpg",
+                Arroz: "images/galletascoop.jpeg",
+                Coco: "images/galletascoop.jpeg",
+                Dulce: "images/galletascoop.jpeg",
+                Frutas: "images/fresascoop.jpg",
+                Piña: "images/scoopamarillo.jpeg",       // Cambia por la imagen real
+                Platano: "images/scoopamarillo.jpeg" // Cambia por la imagen real
+            };
+            img.src = imagenes[sabor] || "images/scoop.jpg";
+        }
+
+        function calcularTotal() {
+            const base = 85;
+            let extra = 0;
+
+            const especiales = ["topping-especial-1", "topping-especial-2"];
+            especiales.forEach(id => {
+                const valor = document.getElementById(id).value;
+                if (valor !== "Sin Topping") {
+                    extra += 15;
+                }
+            });
+
+            const total = base + extra;
+            let detalle = `Malteada base: $85`;
+            if (extra) {
+                detalle += ` + Toppings especiales: $${extra}`;
+            }
+
+            document.getElementById("detalle-total").textContent = detalle;
+            document.getElementById("total").textContent = `$${total}`;
+        }
+        function calcularTotalTee() {
+            const base = 40;  // Costo base del Té
+            let extra = 0;
+
+            // Checar si se eligió Ponche
+            const ponche = document.getElementById("ponche").value;
+            if (ponche !== "Sin ponche") {
+                extra += 20;  // Agregar $20 si se eligió algún ponche
+            }
+
+            // Checar si se eligió Fibra
+            const fibra = document.getElementById("fibra").value;
+            if (fibra !== "Sin fibra") {
+                extra += 20;  // Agregar $20 si se eligió fibra
+            }
+
+            const total = base + extra;
+            let detalle = `Té base: $40`;
+            if (extra) {
+                detalle += ` + Extras: $${extra}`;
+            }
+
+            // Actualizar el resumen del costo
+            document.getElementById("detalle-total-tee").textContent = detalle;
+            document.getElementById("total-tee").textContent = `$${total}`;
+        }
+        function calcularTotalPostres() {
+            const postre = parseInt(document.getElementById("postre").value) || 0;
+            const snack = parseInt(document.getElementById("snack").value) || 0;
+
+            const total = postre + snack;
+            document.getElementById("total-postres").innerText = `$${total}`;
+        }
+
+    </script>
+</head>
+
+<body class=" p-4 sm:px-6 bg-green-100" style="padding-top: 88px">
+    <iframe src="header.html"
+        style="position: fixed; top: 0; left: 0; width: 100%; height: 90px; border: none; z-index: 9999" scrolling="no"
+        title="Header"></iframe>
+
+    <div class="w-full bg-white shadow-md px-4 py-4 mt-[90px] sticky top-[90px] z-50">
+        <h1 class="text-3xl font-semibold text-gray-800">Ordenar</h1>
+    </div>
+    <div class=" flex flex-wrap justify-center gap-8 mt-8">
+
+        <div class="cursor-pointer text-center w-[320px] h-[220px]" onclick="toggleModal()">
+            <img src="images/malteada.jpg" alt="Malteadas"
+                class="w-full h-full object-cover rounded shadow mb-2 transform transition-transform duration-300 hover:scale-105" />
+            <h2 class="text-xl font-semibold">Malteadas</h2>
+            
+            <div class="flex justify-center">
+                
+            </div>
+        </div>
+
+        <div id="modal" onclick="cerrarSiTocaAfuera(event, 'modal')"
+            class="fixed inset-0 bg-black bg-opacity-50 flex items-start justify-center pt-24 px-2 sm:px-0 hidden overflow-y-auto z-50">
+
+            <div onclick="event.stopPropagation()"
+                class="bg-white p-4 sm:p-6 rounded-lg w-full max-w-md sm:max-w-lg space-y-4 relative shadow-lg mx-auto">
+
+                <button onclick="toggleModal()"
+                    class="absolute top-2 right-2 text-gray-500 hover:text-gray-900 text-xl">✖️</button>
+                <h3 class="text-lg font-bold text-center mt-2">Seleccione que llevará su malteada</h3>
+                <div class="flex justify-center">
+                    <div class="w-60 h-1 bg-green-500 rounded-full my-2"></div>
+                </div>
+
+                <div class="space-y-2">
+                    <!-- Scoop 1 -->
+                    <div class="flex items-center space-x-2">
+                        <img id="img1" src="images/scoop.jpg" class="w-10 h-10 rounded" alt="Scoop" />
+                        <div class="relative w-full">
+                            <select id="select1" onchange="cambiarImagen('select1', 'img1')"
+                                class="appearance-none w-full border border-gray-300 rounded-md px-4 py-2 bg-white text-gray-800 shadow-sm pr-10">
+                                <option selected disabled>Seleccione el scoop</option>
+                                <option value="Chocolate">Chocolate</option>
+                                <option value="Galleta">Galleta</option>
+                                <option value="Vainilla">Vainilla</option>
+                                <option value="Fresa">Fresa</option>
+                                <option value="Arroz">Arroz con leche</option>
+                                <option value="Coco">Coco</option>
+                                <option value="Dulce">Dulce de leche</option>
+                                <option value="Frutas">Frutas tropicales</option>
+                                <option value="Piña">Piña colada</option>
+                                <option value="Platano">Plátano</option>
+
+
+                            </select>
+                            <svg class="absolute right-2 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-500"
+                                fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <!-- Scoop 2 -->
+                    <div class="flex items-center space-x-2">
+                        <img id="img2" src="images/scoop.jpg" class="w-10 h-10 rounded" alt="Scoop" />
+                        <div class="relative w-full">
+                            <select id="select2" onchange="cambiarImagen('select2', 'img2')"
+                                class="appearance-none w-full border border-gray-300 rounded-md px-4 py-2 bg-white text-gray-800 shadow-sm">
+                                <option selected disabled>Seleccione el scoop</option>
+                                <option value="Chocolate">Chocolate</option>
+                                <option value="Galleta">Galleta</option>
+                                <option value="Vainilla">Vainilla</option>
+                                <option value="Fresa">Fresa</option>
+                                <option value="Arroz">Arroz con leche</option>
+                                <option value="Coco">Coco</option>
+                                <option value="Dulce">Dulce de leche</option>
+                                <option value="Frutas">Frutas tropicales</option>
+                                <option value="Piña">Piña colada</option>
+                                <option value="Platano">Plátano</option>
+                            </select>
+                            <svg class="absolute right-2 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-500"
+                                fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <!-- Scoop 3 -->
+                    <div class="flex items-center space-x-2">
+                        <img id="img3" src="images/scoop.jpg" class="w-10 h-10 rounded" alt="Scoop" />
+                        <div class="relative w-full">
+                            <select id="select3" onchange="cambiarImagen('select3', 'img3')"
+                                class="appearance-none w-full border border-gray-300 rounded-md px-4 py-2 bg-white text-gray-800 shadow-sm">
+                                <option selected disabled>Seleccione el scoop</option>
+                                <option value="Chocolate">Chocolate</option>
+                                <option value="Galleta">Galleta</option>
+                                <option value="Vainilla">Vainilla</option>
+                                <option value="Fresa">Fresa</option>
+                                <option value="Arroz">Arroz con leche</option>
+                                <option value="Coco">Coco</option>
+                                <option value="Dulce">Dulce de leche</option>
+                                <option value="Frutas">Frutas tropicales</option>
+                                <option value="Piña">Piña colada</option>
+                                <option value="Platano">Plátano</option>
+                            </select>
+                            <svg class="absolute right-2 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-500"
+                                fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Proteína -->
+                <div>
+                    <label class="block text-sm font-medium">¿Con proteína?</label>
+                    <div class="relative w-full mt-1">
+                        <select onchange="calcularTotal()"
+                            class="appearance-none w-full border border-gray-300 rounded-md px-4 py-2 bg-white text-gray-800 shadow-sm">
+                            <option selected disabled>Seleccione el scoop</option>
+                            <option value="Chocolate">Chocolate</option>
+                            <option value="Galleta">Galleta</option>
+                            <option value="Vainilla">Vainilla</option>
+                            <option value="Fresa">Fresa</option>
+                            <option value="Arroz">Arroz con leche</option>
+                            <option value="Coco">Coco</option>
+                            <option value="Dulce">Dulce de leche</option>
+                            <option value="Frutas">Frutas tropicales</option>
+                            <option value="Piña">Piña colada</option>
+                            <option value="Platano">Plátano</option>
+                        </select>
+                        <svg class="absolute right-2 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-500"
+                            fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7">
+                            </path>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Toppings normales -->
+                <div>
+                    <label class="block text-sm font-medium">Topping normal (gratis)</label>
+                    <div class="relative w-full mt-1 mb-2">
+                        <select id="topping-normal-1" onchange="calcularTotal()"
+                            class="appearance-none w-full border border-gray-300 rounded-md px-4 py-2 bg-white text-gray-800 shadow-sm">
+                            <option>Sin Topping</option>
+                            <option>Granola</option>
+                            <option>Coco</option>
+                            <option>Fibra</option>
+                        </select>
+                        <svg class="absolute right-2 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-500"
+                            fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7">
+                            </path>
+                        </svg>
+                    </div>
+                    <div class="relative w-full">
+                        <select id="topping-normal-2" onchange="calcularTotal()"
+                            class="appearance-none w-full border border-gray-300 rounded-md px-4 py-2 bg-white text-gray-800 shadow-sm">
+                            <option>Sin Topping</option>
+                            <option>Granola</option>
+                            <option>Coco</option>
+                            <option>Fibra</option>
+                        </select>
+                        <svg class="absolute right-2 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-500"
+                            fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7">
+                            </path>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Toppings especiales -->
+                <div>
+                    <label class="block text-sm font-medium">Topping especial (+$15 c/u)</label>
+                    <div class="relative w-full mt-1 mb-2">
+                        <select id="topping-especial-1" onchange="calcularTotal()"
+                            class="appearance-none w-full border border-gray-300 rounded-md px-4 py-2 bg-white text-gray-800 shadow-sm">
+                            <option>Sin Topping</option>
+                            <option>Trozo de Waffle</option>
+                            <option>Plátano</option>
+                            <option>Pastelito</option>
+                        </select>
+                        <svg class="absolute right-2 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-500"
+                            fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7">
+                            </path>
+                        </svg>
+                    </div>
+                    <div class="relative w-full">
+                        <select id="topping-especial-2" onchange="calcularTotal()"
+                            class="appearance-none w-full border border-gray-300 rounded-md px-4 py-2 bg-white text-gray-800 shadow-sm">
+                            <option>Sin Topping</option>
+                            <option>Trozo de Waffle</option>
+                            <option>Plátano</option>
+                            <option>Pastelito</option>
+                        </select>
+                        <svg class="absolute right-2 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-500"
+                            fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7">
+                            </path>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Botón agregar -->
+                <button onclick="agregarAlCarrito()"
+                    class="w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-3 px-4 rounded flex items-center justify-center space-x-2">
+                    <span>Agregar al carrito</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13l-1.5 6h11a1 1 0 001-1V7H7.1M7 13h10" />
+                    </svg>
+                </button>
+
+                <!-- Resultado del costo -->
+                <div class="mt-4 text-gray-800 text-sm">
+                    <p id="detalle-total" class="font-medium"></p>
+                    <p class="text-lg font-bold">Total: <span id="total">$85</span></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Botón para abrir el modal -->
+        <div class="cursor-pointer text-center w-[320px] h-[220px]" onclick="toggleTeeModal()">
+            <img src="images/tee.jpeg" alt="Té"
+                class="w-full h-full object-cover rounded shadow mb-2 transform transition-transform duration-300 hover:scale-105" />
+            <h2 class="text-xl font-semibold">
+
+                Té <div class="flex justify-center">
+                </div>
+
+
+            </h2>
+
+        </div>
+
+        <!-- Modal Té -->
+        <!-- Modal Té -->
+        <div id="modal-tee" onclick="cerrarSiTocaAfuera(event, 'modal-tee')"
+            class="fixed inset-0 bg-black bg-opacity-50 flex items-start justify-center pt-24 px-2 sm:px-0 hidden overflow-y-auto z-50">
+
+            <div onclick="event.stopPropagation()"
+                class="bg-white p-4 sm:p-6 rounded-lg w-full max-w-md sm:max-w-lg space-y-4 relative shadow-lg mx-auto">
+                <button onclick="toggleTeeModal()"
+                    class="absolute top-2 right-2 text-gray-500 hover:text-gray-900 text-xl">✖️</button>
+
+                <h3 class="text-lg font-bold text-center mt-2">Personaliza tu Té</h3>
+                <div class="flex justify-center">
+                    <div class="w-60 h-1 bg-green-500 rounded-full my-2"></div>
+                </div>
+                <!-- Tipo de Té -->
+                <div>
+                    <label class="block text-sm font-medium">Tipo de Té</label>
+                    <div class="relative w-full">
+                        <select
+                            class="appearance-none w-full border border-gray-300 rounded-md px-4 py-2 bg-white text-gray-800 shadow-sm pr-10">
+                            <option>Concentrado de hierbas</option>
+                            <option>De hierbas Chai</option>
+                            <option>Sabor granada</option>
+                            <option>Sabor limón</option>
+                            <option>Sabor menta</option>
+                            <option>NRG</option>
+                            <option>NRG manzana</option>
+                        </select>
+                        <svg class="absolute right-2 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-500"
+                            fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7">
+                            </path>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Aloe -->
+                <div>
+                    <label class="block text-sm font-medium">Aloe</label>
+                    <div class="relative w-full">
+                        <select id="aloe" onchange="calcularTotalTee()"
+                            class="appearance-none w-full border border-gray-300 rounded-md px-4 py-2 bg-white text-gray-800 shadow-sm pr-10">
+                            <option>Natural</option>
+                            <option>Sabor mandarina</option>
+                            <option>Sabor uva</option>
+                            <option>Sabor mango</option>
+                        </select>
+                        <svg class="absolute right-2 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-500"
+                            fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7">
+                            </path>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Ponche -->
+                <div>
+                    <label class="block text-sm font-medium">Ponche  (+20)</label>
+                    <div class="relative w-full">
+                        <select id="ponche" onchange="calcularTotalTee()"
+                            class="appearance-none w-full border border-gray-300 rounded-md px-4 py-2 bg-white text-gray-800 shadow-sm pr-10">
+                            <option>Sin ponche</option>
+                            <option>De frutas tropicales</option>
+                            <option>Durazno-mango</option>
+                        </select>
+                        <svg class="absolute right-2 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-500"
+                            fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7">
+                            </path>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Fibra -->
+                <div>
+                    <label class="block text-sm font-medium">Fibra  (+20)</label>
+                    <div class="relative w-full">
+                        <select id="fibra" onchange="calcularTotalTee()"
+                            class="appearance-none w-full border border-gray-300 rounded-md px-4 py-2 bg-white text-gray-800 shadow-sm pr-10">
+                            <option>Sin fibra</option>
+                            <option>Sabor manzana</option>
+                            <option>Sabor piña coco</option>
+                        </select>
+                        <svg class="absolute right-2 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-500"
+                            fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7">
+                            </path>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Botón agregar -->
+                <button onclick="agregarAlCarrito()"
+                    class="w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-3 px-4 rounded flex items-center justify-center space-x-2">
+                    <span>Agregar al carrito</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13l-1.5 6h11a1 1 0 001-1V7H7.1M7 13h10" />
+                    </svg>
+                </button>
+
+                <!-- Resultado del costo -->
+                <div class="mt-4 text-gray-800 text-sm">
+                    <p id="detalle-total-tee" class="font-medium"></p>
+                    <p class="text-lg font-bold">Total: <span id="total-tee">$40</span></p>
+                </div>
+            </div>
+        </div>
+        <!-- Botón para abrir el modal de Postres/Snack -->
+        <div class="cursor-pointer text-center w-[320px] h-[220px]" onclick="togglePostresModal()">
+            <img src="images/snack.jpeg" alt="Postres y Snacks"
+                class="w-full h-full object-cover rounded shadow mb-2 transform transition-transform duration-300 hover:scale-105" />
+            <h2 class="text-xl font-semibold">Postres/Snack</h2>
+            <div class="flex justify-center">
+            </div>
+        </div>
+
+        <!-- Modal Postres/Snack -->
+        <div id="modal-postres" onclick="cerrarSiTocaAfuera(event, 'modal-postres')"
+            class="fixed inset-0 bg-black bg-opacity-50 flex items-start justify-center pt-24 px-2 sm:px-0 hidden overflow-y-auto z-50">
+
+            <div onclick="event.stopPropagation()"
+                class="bg-white p-4 sm:p-6 rounded-lg w-full max-w-md sm:max-w-lg space-y-4 relative shadow-lg mx-auto">
+                <button onclick="togglePostresModal()"
+                    class="absolute top-2 right-2 text-gray-500 hover:text-gray-900 text-xl">✖️</button>
+
+                <h3 class="text-lg font-bold text-center mt-2">Elige tus Postres y Snacks</h3>
+                <div class="flex justify-center">
+                    <div class="w-60 h-1 bg-green-500 rounded-full my-2"></div>
+                </div>
+
+                <!-- Postres -->
+                <div>
+                    <label class="block text-sm font-medium">Postres</label>
+                    <div class="relative w-full">
+                        <select id="postre" onchange="calcularTotalPostres()"
+                            class="appearance-none w-full border border-gray-300 rounded-md px-4 py-2 bg-white text-gray-800 shadow-sm pr-10">
+                            <option value="0">Ninguno</option>
+                            <option value="15">Pastelito - $15</option>
+                            <option value="70">Waffle - $70</option>
+                            <option value="70">Crepa - $70</option>
+                        </select>
+                        <svg class="absolute right-2 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-500"
+                            fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7">
+                            </path>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Snacks -->
+                <div>
+                    <label class="block text-sm font-medium">Snacks</label>
+                    <div class="relative w-full">
+                        <select id="snack" onchange="calcularTotalPostres()"
+                            class="appearance-none w-full border border-gray-300 rounded-md px-4 py-2 bg-white text-gray-800 shadow-sm pr-10">
+                            <option value="0">Ninguno</option>
+                            <option value="50">Barra sabor chocolate - $50</option>
+                            <option value="50">Barra sabor almendra - $50</option>
+                            <option value="50">Barra sabor limón - $50</option>
+                            <option value="35">Papas sabor BBQ - $35</option>
+                        </select>
+                        <svg class="absolute right-2 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-500"
+                            fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7">
+                            </path>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Botón agregar -->
+                <button onclick="agregarAlCarrito()"
+                    class="w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-3 px-4 rounded flex items-center justify-center space-x-2">
+                    <span>Agregar al carrito</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13l-1.5 6h11a1 1 0 001-1V7H7.1M7 13h10" />
+                    </svg>
+                </button>
+
+                <!-- Resultado del costo -->
+                <div class="mt-4 text-gray-800 text-sm">
+                    <p id="detalle-total-postres" class="font-medium"></p>
+                    <p class="text-lg font-bold">Total: <span id="total-postres">$0</span></p>
+                </div>
+            </div>
+        </div>
+</body>
+
+</html>
