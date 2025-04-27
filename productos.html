@@ -26,24 +26,73 @@
             modal.classList.add("hidden");
         }
 
-        function agregarAlCarrito() {
-            alert("¡Su producto fue agregado al carrito!");
-
-            const modalMalteadas = document.getElementById("modal");
-            const modalTee = document.getElementById("modal-tee");
-            const modalPostres = document.getElementById("modal-postres");
-
-            if (!modalMalteadas.classList.contains("hidden")) {
-                modalMalteadas.classList.add("hidden");
+    
+            function agregarAlCarrito(producto) {
+                let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+                carrito.push(producto);
+                localStorage.setItem('carrito', JSON.stringify(carrito));
+                alert("¡Producto agregado al carrito!");
             }
-
-            if (!modalTee.classList.contains("hidden")) {
-                modalTee.classList.add("hidden");
+            function guardarMalteadaEnCarrito() {
+                const scoop1 = document.getElementById("select1").value || "N/A";
+                const scoop2 = document.getElementById("select2").value || "N/A";
+                const scoop3 = document.getElementById("select3").value || "N/A";
+                const toppingEsp1 = document.getElementById("topping-especial-1").value;
+                const toppingEsp2 = document.getElementById("topping-especial-2").value;
+            
+                let precio = 85;
+                if (toppingEsp1 !== "Sin Topping") precio += 15;
+                if (toppingEsp2 !== "Sin Topping") precio += 15;
+            
+                const producto = {
+                    nombre: "Malteada",
+                    detalles: `Scoops: ${scoop1}, ${scoop2}, ${scoop3}. Toppings especiales: ${toppingEsp1}, ${toppingEsp2}`,
+                    precio
+                };
+            
+                agregarAlCarrito(producto);
+                toggleModal(); // cerrar el modal
             }
-            if (!modalPostres.classList.contains("hidden")) {
-                modalPostres.classList.add("hidden");
+            function guardarTeeEnCarrito() {
+                const tipo = document.querySelector("#modal-tee select").value;
+                const aloe = document.getElementById("aloe").value;
+                const ponche = document.getElementById("ponche").value;
+                const fibra = document.getElementById("fibra").value;
+            
+                let precio = 40;
+                if (ponche !== "Sin ponche") precio += 20;
+                if (fibra !== "Sin fibra") precio += 20;
+            
+                const producto = {
+                    nombre: "Té",
+                    detalles: `Tipo: ${tipo}, Aloe: ${aloe}, Ponche: ${ponche}, Fibra: ${fibra}`,
+                    precio
+                };
+            
+                agregarAlCarrito(producto);
+                toggleTeeModal();
             }
-        }
+            function guardarPostresEnCarrito() {
+                const postre = document.getElementById("postre");
+                const snack = document.getElementById("snack");
+            
+                const postreNombre = postre.options[postre.selectedIndex].text;
+                const postrePrecio = parseInt(postre.value) || 0;
+            
+                const snackNombre = snack.options[snack.selectedIndex].text;
+                const snackPrecio = parseInt(snack.value) || 0;
+            
+                const total = postrePrecio + snackPrecio;
+            
+                const producto = {
+                    nombre: "Postres y Snacks",
+                    detalles: `Postre: ${postreNombre}, Snack: ${snackNombre}`,
+                    precio: total
+                };
+            
+                agregarAlCarrito(producto);
+                togglePostresModal(); // Cierra el modal
+            }
 
         function cambiarImagen(selectId, imgId) {
             const select = document.getElementById(selectId);
@@ -250,15 +299,21 @@
 
                 <!-- Proteína -->
                 <div>
-                    <label class="block text-sm font-medium">¿que proteína?</label>
+                    <label class="block text-sm font-medium">¿Con proteína?</label>
                     <div class="relative w-full mt-1">
                         <select onchange="calcularTotal()"
                             class="appearance-none w-full border border-gray-300 rounded-md px-4 py-2 bg-white text-gray-800 shadow-sm">
                             <option selected disabled>Seleccione el scoop</option>
                             <option value="Chocolate">Chocolate</option>
+                            <option value="Galleta">Galleta</option>
                             <option value="Vainilla">Vainilla</option>
-                            <option value="Natural">Natural</option>
-
+                            <option value="Fresa">Fresa</option>
+                            <option value="Arroz">Arroz con leche</option>
+                            <option value="Coco">Coco</option>
+                            <option value="Dulce">Dulce de leche</option>
+                            <option value="Frutas">Frutas tropicales</option>
+                            <option value="Piña">Piña colada</option>
+                            <option value="Platano">Plátano</option>
                         </select>
                         <svg class="absolute right-2 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-500"
                             fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -335,8 +390,7 @@
                 </div>
 
                 <!-- Botón agregar -->
-                <button onclick="agregarAlCarrito()"
-                    class="w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-3 px-4 rounded flex items-center justify-center space-x-2">
+                <button onclick="guardarMalteadaEnCarrito()" class="w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-3 px-4 rounded flex items-center justify-center space-x-2">
                     <span>Agregar al carrito</span>
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
                         stroke="currentColor">
@@ -463,7 +517,7 @@
                 </div>
 
                 <!-- Botón agregar -->
-                <button onclick="agregarAlCarrito()"
+                <button onclick="guardarTeeEnCarrito()"
                     class="w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-3 px-4 rounded flex items-center justify-center space-x-2">
                     <span>Agregar al carrito</span>
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
@@ -553,7 +607,7 @@
                 </div>
 
                 <!-- Botón agregar -->
-                <button onclick="agregarAlCarrito()"
+                <button onclick="guardarPostresEnCarrito()"
                     class="w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-3 px-4 rounded flex items-center justify-center space-x-2">
                     <span>Agregar al carrito</span>
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
