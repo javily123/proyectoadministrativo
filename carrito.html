@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrito de Compras</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class=" p-4 sm:px-6 bg-green-100" style="padding-top: 64px">
+    <iframe src="header.html"
+        style="position: fixed; top: 0; left: 0; width: 100%; height: 80px; border: none; z-index: 9999" scrolling="no"
+        title="Header"></iframe>
+<body class="bg-green-100 min-h-screen p-4">
+    <div class="max-w-4xl mx-auto bg-white rounded-xl shadow-md p-6">
+        <h1 class="text-3xl font-bold text-center text-green-600 mb-6">Carrito de Compras</h1>
+
+        <div id="carrito" class="space-y-4">
+            <!-- Aquí se renderizan los productos -->
+        </div>
+
+        <div class="border-t border-gray-300 mt-6 pt-4">
+            <p class="text-xl font-semibold">Total: <span id="total" class="text-green-700">$0</span></p>
+            <button id="confirmar" class="mt-4 w-full bg-green-500 hover:bg-green-600 text-white font-bold py-3 rounded-lg">
+                Confirmar Pedido
+            </button>
+        </div>
+    </div>
+
+    <script>
+        const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+        const carritoContainer = document.getElementById('carrito');
+        const totalElement = document.getElementById('total');
+
+        function renderCarrito() {
+            carritoContainer.innerHTML = '';
+            let total = 0;
+
+            carrito.forEach((producto, index) => {
+                total += producto.precio;
+
+                const div = document.createElement('div');
+                div.className = 'bg-gray-100 p-4 rounded-lg flex justify-between items-center';
+                div.innerHTML = `
+                    <div>
+                        <p class="text-lg font-semibold">${producto.nombre}</p>
+                        <p class="text-sm text-gray-600">${producto.detalles}</p>
+                        <p class="text-green-700 font-bold mt-1">$${producto.precio}</p>
+                    </div>
+                    <button class="text-red-600 font-bold hover:underline" onclick="eliminarProducto(${index})">Eliminar</button>
+                `;
+                carritoContainer.appendChild(div);
+            });
+
+            totalElement.textContent = `$${total}`;
+        }
+
+        function eliminarProducto(index) {
+            carrito.splice(index, 1);
+            localStorage.setItem('carrito', JSON.stringify(carrito));
+            renderCarrito();
+        }
+
+        document.getElementById('confirmar').addEventListener('click', () => {
+            alert("📦 ¡Pedido confirmado! (Aquí irá el envío por correo más adelante)");
+        });
+
+        renderCarrito();
+    </script>
+</body>   
+</html>
