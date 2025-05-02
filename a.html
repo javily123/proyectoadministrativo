@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- font cdn link -->
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+     <!-- custom css file -->
+      <link rel="stylesheet" href="style.css">
+  <title>Hierbalaif - Productos</title>
+
+      <!-- header section starts-->
+      <header class="header">
+
+        <a href="#" class="logo"><i class="fa-solid fa-seedling"></i>Hierbalaif</a>
+        
+        <nav class="navbar">
+            <a href="#home">Inicio</a>
+            <a href="#about">Sobre nosotros</a>
+            <a href="#popular">Popular</a>
+            <a href="a.html">Menu</a>
+            <a href="#order">Orden</a>
+        </nav>
+
+        <div class="icons">
+            <div id="menu-btn" class="fas fa-bars"></div>
+            <div id="search-btn" class="fas fa-search"></div>
+            <div id="cart-btn" class="fas fa-shopping-cart"></div>
+            <div id="login-btn" class="fas fa-user"></div>
+
+        </div>
+    </header>
+
+  <style>
+    #menu-btn {
+  display: none;
+}
+@media (max-width:768px){
+  #menu-btn {
+    display: inline-block;
+  }
+  .header .navbar{
+    position: absolute;
+    top: 99px; left: 0; right:0;
+    background: white;
+    border-top: border;
+    border-bottom: border;
+    
+    
+    a{
+      font-size: 2rem;
+      margin: 2rem;
+      display: block;
+    }
+  }
+}
+     body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    section.products-gallery {
+      background: #d9fce1;
+      padding: 6rem 5%;
+      text-align: center;
+    }
+
+    .products-gallery .heading {
+      font-size: 3rem;
+      color: #130f40;
+      margin-bottom: 4rem;
+    }
+
+    .products-gallery .heading span {
+      color: #27ae60;
+    }
+
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 3rem;
+    }
+
+    .product-card {
+      background: #fff;
+      border-radius: 1rem;
+      padding: 2rem;
+      box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .product-card:hover {
+      transform: scale(1.05);
+      box-shadow: 0 1rem 2rem rgba(0, 128, 0, 0.2);
+    }
+
+    .product-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .product-card p {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #130f40;
+    }
+
+    /* Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 0, 0, 0.6);
+      justify-content: center;
+      align-items: center;
+      z-index: 2000;
+      padding: 2rem;
+    }
+
+    .modal-content {
+      background: #fff;
+      padding: 3rem;
+      border-radius: 1rem;
+      text-align: center;
+      max-width: 400px;
+      width: 100%;
+      position: relative;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .modal-content img {
+      width: 100%;
+      height: auto;
+      margin-bottom: 2rem;
+      border-radius: 1rem;
+    }
+
+    .modal-content h2 {
+      font-size: 2.5rem;
+      color: #130f40;
+      margin-bottom: 1rem;
+    }
+
+    .modal-content p {
+      font-size: 1.6rem;
+      color: #666;
+      margin-bottom: 2rem;
+    }
+
+    .btn {
+      padding: 1rem 2.5rem;
+      background: linear-gradient(to right, #27ae60, rgb(30, 130, 70));
+      color: white;
+      border-radius: 5rem;
+      font-size: 1.5rem;
+      cursor: pointer;
+      border: none;
+      transition: all 0.3s ease;
+    }
+
+    .btn:hover {
+      transform: scale(1.05);
+      background: #1f8a50;
+    }
+
+    .close {
+      position: absolute;
+      top: 1rem;
+      right: 2rem;
+      font-size: 3rem;
+      color: #130f40;
+      cursor: pointer;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    /* Responsive styles */
+    @media (max-width: 768px) {
+      .products-gallery .heading {
+        font-size: 2.5rem;
+      }
+
+      .product-card {
+        padding: 1rem;
+      }
+
+      .product-card img {
+        height: 150px;
+      }
+
+      .product-card p {
+        font-size: 1.3rem;
+      }
+
+      .modal-content h2 {
+        font-size: 2rem;
+      }
+
+      .modal-content p {
+        font-size: 1.4rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .header .navbar {
+        display: none;
+      }
+
+      .icons {
+        display: block;
+      }
+
+      .product-grid {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 1.5rem;
+      }
+
+      .product-card {
+        padding: 1.5rem;
+      }
+
+      .product-card img {
+        height: 130px;
+      }
+    }
+  </style>
+<body>
+<section class="products-gallery" id="products">
+  <h1 class="heading">Nuestros <span>Productos</span></h1>
+
+  <div class="product-grid">
+    <!-- Aquí comienzan los productos -->
+
+    <!-- Producto 1 -->
+    <div class="product-card" onclick="openProductModal('Malteadas Fresa', 'maltadafresa.jpg', 'Malteada sabor fresa deliciosa y nutritiva.')">
+      <img src="maltadafresa.jpg" alt="Malteadas Fresa">
+      <p>Malteadas Fresa</p>
+    </div>
+
+    <!-- Producto 2 -->
+    <div class="product-card" onclick="openProductModal('Té Limón', 'tedelimon.jpg|', 'Té refrescante sabor limón.')">
+      <img src="tedelimon.jpg" alt="Té Limón">
+      <p>Té Limón</p>
+    </div>
+
+    <!-- Producto 3 -->
+    <div class="product-card" onclick="openProductModal('Snacks Salados', 'snakssalados.jpg', 'Snack bajo en calorías para antojos saludables.')">
+      <img src="snakssalados.jpg" alt="Snacks Salados">
+      <p>Snacks Salados</p>
+    </div>
+
+    <!-- Producto 4 -->
+    <div class="product-card" onclick="openProductModal('Malteadas Chocolate', 'malteadachocolate.jpg', 'Malteada de chocolate para energía y recuperación.')">
+      <img src="malteadachocolate.jpg" alt="Malteadas Chocolate">
+      <p>Malteadas Chocolate</p>
+    </div>
+
+    <!-- Producto 5 -->
+    <div class="product-card" onclick="openProductModal('Té Durazno', 'tededurazno.jpg', 'Té sabor durazno, perfecto para revitalizarte.')">
+      <img src="tededurazno.jpg" alt="Té Durazno">
+      <p>Té Durazno</p>
+    </div>
+
+    <!-- Producto 6 -->
+    <div class="product-card" onclick="openProductModal('Snack Dulce', 'snackdulce.jpeg', 'Snack dulce ideal para media tarde.')">
+      <img src="snackdulce.jpeg" alt="Snack Dulce">
+      <p>Snack Dulce</p>
+    </div>
+
+    <!-- Producto 7 -->
+    <div class="product-card" onclick="openProductModal('Malteadas Vainilla', 'vainillamalteada.jpg', 'Malteada cremosa sabor vainilla.')">
+      <img src="vainillamalteada.jpg" alt="Malteadas Vainilla">
+      <p>Malteadas Vainilla</p>
+    </div>
+
+    <!-- Producto 8 -->
+    <div class="product-card" onclick="openProductModal('Té Verde', 'teverde.jpg', 'Poderoso antioxidante natural.')">
+      <img src="teverde.jpg" alt="Té Verde">
+      <p>Té Verde</p>
+    </div>
+
+    <!-- Producto 9 -->
+    <div class="product-card" onclick="openProductModal('Mix de Nueces', 'mixdenueces.jpeg', 'Combinación de nueces saludables.')">
+      <img src="mixdenueces.jpeg" alt="Mix de Nueces">
+      <p>Mix de Nueces</p>
+    </div>
+
+    <!-- Producto 10 -->
+    <div class="product-card" onclick="openProductModal('Malteadas Cookies & Cream', 'malteadadecookies.jpg', 'Sabor a galleta irresistible.')">
+      <img src="malteadadecookies.jpg" alt="Malteadas Cookies & Cream">
+      <p>Malteadas Cookies</p>
+    </div>
+
+    <!-- Producto 11 -->
+    <div class="product-card" onclick="openProductModal('Té de Jamaica', 'tejamaica.jpg', 'Té natural refrescante de jamaica.')">
+      <img src="tejamaica.jpg" alt="Té Jamaica">
+      <p>Té Jamaica</p>
+    </div>
+
+    <!-- Producto 12 -->
+    <div class="product-card" onclick="openProductModal('Galletas Proteicas', 'galletasproteicas.jpg', 'Galletas altas en proteína.')">
+      <img src="galletasproteicas.jpg" alt="Galletas Proteicas">
+      <p>Galletas Proteicas</p>
+    </div>
+
+    <!-- Producto 13 -->
+    <div class="product-card" onclick="openProductModal('Malteadas Mango', 'malteadamango.jpg', 'Malteada tropical sabor mango.')">
+      <img src="malteadamango.jpg" alt="Malteadas Mango">
+      <p>Malteadas Mango</p>
+    </div>
+
+    <!-- Producto 14 -->
+    <div class="product-card" onclick="openProductModal('Té Herbal', 'teherbal.avif', 'Té detox de hierbas naturales.')">
+      <img src="teherbal.avif" alt="Té Herbal">
+      <p>Té Herbal</p>
+    </div>
+
+    <!-- Producto 15 -->
+    <div class="product-card" onclick="openProductModal('Mix Semillas', 'mixsemillas.jpg', 'Semillas seleccionadas para tu salud.')">
+      <img src="mixsemillas.jpg" alt="Mix Semillas">
+      <p>Mix Semillas</p>
+    </div>
+
+    <!-- Producto 16 -->
+    <div class="product-card" onclick="openProductModal('Barritas de Proteína', 'barrasproteina.jpg', 'Barritas energéticas para el día.')">
+      <img src="barrasproteina.jpg" alt="Barritas de Proteína">
+      <p>Barritas de Proteína</p>
+    </div>
+
+    <!-- Producto 17 -->
+    <div class="product-card" onclick="openProductModal('Té Rooibos', 'terooibos.jpg', 'Té rojo africano revitalizante.')">
+      <img src="terooibos.jpg" alt="Té Rooibos">
+      <p>Té Rooibos</p>
+    </div>
+
+    <!-- Producto 18 -->
+    <div class="product-card" onclick="openProductModal('Yogurt Griego', 'yogurtgriego.jpg', 'Yogurt bajo en grasa y alto en proteína.')">
+      <img src="yogurtgriego.jpg" alt="Yogurt Griego">
+      <p>Yogurt Griego</p>
+    </div>
+
+    <!-- Producto 19 -->
+    <div class="product-card" onclick="openProductModal('Malteadas Cappuccino', 'malteadacappuccino.avif', 'Para los amantes del café.')">
+      <img src="malteadacappuccino.avif" alt="Malteadas Cappuccino">
+      <p>Malteadas Cappuccino</p>
+    </div>
+
+    <!-- Producto 20 -->
+    <div class="product-card" onclick="openProductModal('Té Chai', 'techai.jpg', 'Té especiado, lleno de sabor.')">
+      <img src="techai.jpg" alt="Té Chai">
+      <p>Té Chai</p>
+    </div>
+
+    <!-- Producto 21 -->
+    <div class="product-card" onclick="openProductModal('Mix Frutos Secos', 'frutossecos.jpg', 'Frutos secos premium.')">
+      <img src="frutossecos.jpg" alt="Mix Frutos Secos">
+      <p>Mix Frutos Secos</p>
+    </div>
+
+    <!-- Producto 22 -->
+    <div class="product-card" onclick="openProductModal('Smoothie de Moras', 'smoothiemoras.webp', 'Smoothie antioxidante de moras.')">
+      <img src="smoothiemoras.webp" alt="Smoothie de Moras">
+      <p>Smoothie de Moras</p>
+    </div>
+
+    <!-- Producto 23 -->
+    <div class="product-card" onclick="openProductModal('Té Blanco', 'teblanco.avif', 'Té blanco delicado y puro.')">
+      <img src="teblanco.avif" alt="Té Blanco">
+      <p>Té Blanco</p>
+    </div>
+
+    <!-- Producto 24 -->
+    <div class="product-card" onclick="openProductModal('Snacks Proteicos', 'snacksproteicos.jpg', 'Snacks altos en proteína.')">
+      <img src="snacksproteicos.jpg" alt="Snacks Proteicos">
+      <p>Snacks Proteicos</p>
+    </div>
+
+
+  </div>
+</section>
+
+<!-- Modal -->
+<div id="product-modal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeProductModal()">&times;</span>
+    <img id="modal-image" src="" alt="Producto">
+    <h2 id="modal-title"></h2>
+    <p id="modal-description"></p>
+    <button class="btn" onclick="addToCart()">Agregar al carrito</button>
+  </div>
+</div>
+
+<!-- Script para Modal -->
+<script>
+  function openProductModal(title, imageSrc, description) {
+    document.getElementById('modal-title').innerText = title;
+    document.getElementById('modal-image').src = imageSrc;
+    document.getElementById('modal-description').innerText = description;
+    document.getElementById('product-modal').style.display = 'flex';
+  }
+
+  function closeProductModal() {
+    document.getElementById('product-modal').style.display = 'none';
+  }
+
+  function addToCart() {
+    alert("Producto agregado al carrito 🛒");
+    closeProductModal();
+  }
+</script>
+
+</body>
+</html>

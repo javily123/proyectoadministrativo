@@ -59,6 +59,10 @@ body {
   background: $blanco;
 }
 
+#menu-btn {
+  display: none;
+}
+
 // 5. Header (barra superior)
 .header {
   position: sticky;
