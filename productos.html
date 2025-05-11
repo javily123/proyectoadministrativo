@@ -34,77 +34,83 @@
             alert("¡Producto agregado al carrito!");
         }
         function guardarMalteadaEnCarrito() {
-            const scoop1 = document.getElementById("select1").value;
-            const scoop2 = document.getElementById("select2").value;
-            const scoop3 = document.getElementById("select3").value;
-            const scoop4 = document.getElementById("select4").value;
-            const toppingEsp1 = document.getElementById("topping-especial-1").value;
-            const toppingEsp2 = document.getElementById("topping-especial-2").value;
+    const scoop1 = document.querySelectorAll(".selected-text")[0].textContent;
+    const scoop2 = document.querySelectorAll(".selected-text")[1].textContent;
+    const scoop3 = document.querySelectorAll(".selected-text")[2].textContent;
+    const scoop4 = document.querySelectorAll(".selected-text")[3].textContent;
+    const toppingEsp1 = document.getElementById("selected-topping-1").textContent;
+    const toppingEsp2 = document.getElementById("selected-topping-2").textContent;
 
-            // Validar que los scoops estén seleccionados
-            if (
-                !scoop1 || scoop1 === "Seleccione el scoop" ||
-                !scoop2 || scoop2 === "Seleccione el scoop" ||
-                !scoop3 || scoop3 === "Seleccione el scoop" ||
-                !scoop4 || scoop4 === "seleccione el scoop"
-            ) {
-                alert("Por favor selecciona los 3 scoops y el scoop de proteina antes de agregar al carrito.");
-                return;
-            }
+    // Validar que los scoops estén seleccionados
+    if (
+        scoop1 === "Seleccione el scoop" ||
+        scoop2 === "Seleccione el scoop" ||
+        scoop3 === "Seleccione el scoop" ||
+        scoop4 === "Seleccione el scoop"
+    ) {
+        alert("Por favor selecciona los 3 scoops y el scoop de proteína antes de agregar al carrito.");
+        return;
+    }
 
-            let precio = 85;
-            if (toppingEsp1 !== "Sin Topping") precio += 15;
-            if (toppingEsp2 !== "Sin Topping") precio += 15;
+    let precio = 85;
+    if (toppingEsp1 !== "Sin Topping") precio += 15;
+    if (toppingEsp2 !== "Sin Topping") precio += 15;
 
-            const producto = {
-                nombre: "Malteada",
-                detalles: `Scoops: ${scoop1}, ${scoop2}, ${scoop3}. Toppings especiales: ${toppingEsp1}, ${toppingEsp2}`,
-                precio
-            };
+    const producto = {
+        nombre: "Malteada",
+        detalles: `Scoops: ${scoop1}, ${scoop2}, ${scoop3}, Proteína: ${scoop4}. Toppings especiales: ${toppingEsp1}, ${toppingEsp2}`,
+        precio,
+        imagen: "malteadacarrito.jpeg"
+    }; 
 
-            agregarAlCarrito(producto);
-            toggleModal(); // cerrar el modal
-        }
-        function guardarTeeEnCarrito() {
-            const tipo = document.querySelector("#modal-tee select").value;
-            const aloe = document.getElementById("aloe").value;
-            const ponche = document.getElementById("ponche").value;
-            const fibra = document.getElementById("fibra").value;
+    agregarAlCarrito(producto);
+    toggleModal(); // cerrar el modal
+}
 
-            let precio = 40;
-            if (ponche !== "Sin ponche") precio += 20;
-            if (fibra !== "Sin fibra") precio += 20;
+function guardarTeeEnCarrito() {
+    const tipo = document.querySelector("#modal-tee .selected-text").textContent;
+    const aloe = document.querySelectorAll("#modal-tee .selected-text")[1].textContent;
+    const ponche = document.getElementById("selected-ponche").textContent;
+    const fibra = document.getElementById("selected-fibra").textContent;
 
-            const producto = {
-                nombre: "Té",
-                detalles: `Tipo: ${tipo}, Aloe: ${aloe}, Ponche: ${ponche}, Fibra: ${fibra}`,
-                precio
-            };
+    let precio = 40;
+    if (ponche !== "Sin ponche") precio += 20;
+    if (fibra !== "Sin fibra") precio += 20;
 
-            agregarAlCarrito(producto);
-            toggleTeeModal();
-        }
+    const producto = {
+        nombre: "Té",
+        detalles: `Tipo: ${tipo}, Aloe: ${aloe}, Ponche: ${ponche}, Fibra: ${fibra}`,
+        precio,
+        imagen: "tecarrito.jpg"
+    };
+
+    agregarAlCarrito(producto);
+    toggleTeeModal();
+}
+
+
+
         function guardarPostresEnCarrito() {
-            const postre = document.getElementById("postre");
-            const snack = document.getElementById("snack");
+    const postre = document.getElementById("selected-postre").textContent;
+    const snack = document.getElementById("selected-snack").textContent;
 
-            const postreNombre = postre.options[postre.selectedIndex].text;
-            const postrePrecio = parseInt(postre.value) || 0;
+    // Extraer precios del texto
+    const postrePrecio = parseInt(postre.replace(/[^\d]/g, '')) || 0;
+    const snackPrecio = parseInt(snack.replace(/[^\d]/g, '')) || 0;
 
-            const snackNombre = snack.options[snack.selectedIndex].text;
-            const snackPrecio = parseInt(snack.value) || 0;
+    const total = postrePrecio + snackPrecio;
 
-            const total = postrePrecio + snackPrecio;
+    const producto = {
+        nombre: "Postres y Snacks",
+        detalles: `Postre: ${postre}, Snack: ${snack}`,
+        precio: total,
+        imagen: "snackcarrito.jpg"
+    };
 
-            const producto = {
-                nombre: "Postres y Snacks",
-                detalles: `Postre: ${postreNombre}, Snack: ${snackNombre}`,
-                precio: total
-            };
+    agregarAlCarrito(producto);
+    togglePostresModal();
+}
 
-            agregarAlCarrito(producto);
-            togglePostresModal(); // Cierra el modal
-        }
 
 
 

@@ -1,72 +1,114 @@
-<!DOCTYPE html>
-<html lang="es">
+    <!DOCTYPE html>
+    <html lang="es">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Carrito de Compras</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-</head>
-<body class=" p-4 sm:px-6 bg-green-100" style="padding-top: 64px">
-    <iframe src="header.html"
-        style="position: fixed; top: 0; left: 0; width: 100%; height: 80px; border: none; z-index: 9999" scrolling="no"
-        title="Header"></iframe>
-<body class="bg-green-100 min-h-screen p-4">
-    <div class="max-w-4xl mx-auto bg-white rounded-xl shadow-md p-6">
-        <h1 class="text-3xl font-bold text-center text-green-600 mb-6">Carrito de Compras</h1>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Carrito de Compras</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+        <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    </head>
 
-        <div id="carrito" class="space-y-4">
-            <!-- Aquí se renderizan los productos -->
+    <body class="p-4 sm:px-6 bg-green-100" style="padding-top: 64px">
+        <iframe src="header.html"
+            style="position: fixed; top: 0; left: 0; width: 100%; height: 80px; border: none; z-index: 9999" scrolling="no"
+            title="Header"></iframe>
+
+        <div class="max-w-4xl mx-auto bg-white rounded-xl shadow-md p-6 mt-24">
+            <h1 class="text-3xl font-bold text-center text-green-600 mb-6">Carrito de Compras</h1>
+
+            <div id="carrito" class="space-y-4">
+                <!-- Aquí se renderizan los productos -->
+            </div>
+
+            <div id="mensaje-vacio" class="hidden text-center">
+                <p class="text-xl text-gray-600">Tu carrito está vacío. ¿Qué tal si miras nuestros productos?</p>
+                <button onclick="window.location.href='productos.html'" class="mt-4 px-6 py-2 bg-green-500 hover:bg-green-600 text-white font-bold rounded-lg">
+                    Ir a ordenar
+                </button>
+            </div>
+
+            <div class="mt-6 p-4 bg-green-50 rounded-xl border border-green-200">
+    <p class="text-xl font-semibold text-green-700">Total: <span id="total" class="font-bold">$0</span></p>
+                <button id="confirmar"
+                    class="mt-4 w-full bg-green-500 hover:bg-green-600 text-white font-bold py-3 rounded-lg transform hover:scale-105 transition-all">
+                    Confirmar Pedido
+                </button>
+            </div>
         </div>
 
-        <div class="border-t border-gray-300 mt-6 pt-4">
-            <p class="text-xl font-semibold">Total: <span id="total" class="text-green-700">$0</span></p>
-            <button id="confirmar" class="mt-4 w-full bg-green-500 hover:bg-green-600 text-white font-bold py-3 rounded-lg">
-                Confirmar Pedido
-            </button>
-        </div>
-    </div>
+        <script>
+            const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+            const carritoContainer = document.getElementById('carrito');
+            const totalElement = document.getElementById('total');
+            const mensajeVacio = document.getElementById('mensaje-vacio');
 
-    <script>
-        const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
-        const carritoContainer = document.getElementById('carrito');
-        const totalElement = document.getElementById('total');
+            function renderCarrito() {
+                carritoContainer.innerHTML = '';
+                let total = 0;
 
-        function renderCarrito() {
-            carritoContainer.innerHTML = '';
-            let total = 0;
+                if (carrito.length === 0) {
+                    mensajeVacio.classList.remove('hidden');
+                } else {
+                    mensajeVacio.classList.add('hidden');
+                    carrito.forEach((producto, index) => {
+                        total += producto.precio;
 
-            carrito.forEach((producto, index) => {
-                total += producto.precio;
+                        const div = document.createElement('div');
+                        div.className = 'bg-white border border-gray-200 p-4 rounded-2xl shadow-md hover:shadow-xl transition-shadow duration-300 flex justify-between items-center';
+                        div.innerHTML = `
+                            <div class="flex items-center space-x-4">
+                                <img src="${producto.imagen}" alt="${producto.nombre}" class="w-16 h-16 rounded-lg object-cover border border-gray-300" />
+                                <div>
+                                    <p class="text-lg font-semibold">${producto.nombre}</p>
+                                    <p class="text-sm text-gray-600">${producto.detalles}</p>
+                                    <p class="text-green-700 font-bold mt-1">$${producto.precio}</p>
+                                </div>
+                            </div>
+                            <button class="text-red-600 font-bold hover:underline" onclick="eliminarProducto(${index})">Eliminar</button>
+                        `;
+                        carritoContainer.appendChild(div);
+                    });
+                }
 
-                const div = document.createElement('div');
-                div.className = 'bg-gray-100 p-4 rounded-lg flex justify-between items-center';
-                div.innerHTML = `
-                    <div>
-                        <p class="text-lg font-semibold">${producto.nombre}</p>
-                        <p class="text-sm text-gray-600">${producto.detalles}</p>
-                        <p class="text-green-700 font-bold mt-1">$${producto.precio}</p>
-                    </div>
-                    <button class="text-red-600 font-bold hover:underline" onclick="eliminarProducto(${index})">Eliminar</button>
-                `;
-                carritoContainer.appendChild(div);
+                totalElement.textContent = `$${total}`;
+            }
+
+            function eliminarProducto(index) {
+                carrito.splice(index, 1);
+                localStorage.setItem('carrito', JSON.stringify(carrito));
+                renderCarrito();
+            }
+
+            document.getElementById('confirmar').addEventListener('click', () => {
+                if (carrito.length === 0) {
+                    alert("Tu carrito está vacío.");
+                    return;
+                }
+            
+                let mensaje = '📦 *Pedido nuevo:*\n\n';
+                carrito.forEach((producto, index) => {
+                    mensaje += `🛍️ ${index + 1}. *${producto.nombre}*\n   - ${producto.detalles}\n   - 💵 $${producto.precio}\n\n`;
+                });
+            
+                const total = carrito.reduce((sum, p) => sum + p.precio, 0);
+                mensaje += `*Total a pagar:* $${total}`;
+            
+                const telefono = '8126126121'; // Reemplaza con tu número real
+            
+                const urlMobile = `https://wa.me/${telefono}?text=${encodeURIComponent(mensaje)}`;
+                const urlDesktop = `https://web.whatsapp.com/send?phone=${telefono}&text=${encodeURIComponent(mensaje)}`;
+            
+                const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+                const urlFinal = isMobile ? urlMobile : urlDesktop;
+            
+                window.open(urlFinal, '_blank');
             });
 
-            totalElement.textContent = `$${total}`;
-        }
-
-        function eliminarProducto(index) {
-            carrito.splice(index, 1);
-            localStorage.setItem('carrito', JSON.stringify(carrito));
             renderCarrito();
-        }
+        </script>
+    </body>
 
-        document.getElementById('confirmar').addEventListener('click', () => {
-            alert("📦 ¡Pedido confirmado! (Aquí irá el envío por correo más adelante)");
-        });
+    </html>
 
-        renderCarrito();
-    </script>
-</body>   
-</html>
+
